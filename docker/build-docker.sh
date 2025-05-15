@@ -9,6 +9,7 @@ fi
 sed -i '/^UID=/d' .env
 sed -i '/^GID=/d' .env
 
+echo "" >> .env
 echo "UID=$(id -u)" >> .env
 echo "GID=$(id -g)" >> .env
 
