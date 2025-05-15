@@ -1,14 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\File;
 
-// Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+$moduleRoutesPath = app_path('Modules');
 
-Route::middleware('auth:api')->group(function () {
-    Route::post('teste', fn () => 'teste');
-    // Route::get('me', [AuthController::class, 'me']);
-    // Route::post('logout', [AuthController::class, 'logout']);
-});
+$modules = File::directories($moduleRoutesPath);
 
+foreach ($modules as $modulePath) {
+    $routeFile = $modulePath . '/Interfaces/Routes/' . strtolower(basename($modulePath)) . '.php';
+
+    if (File::exists($routeFile)) {
+        require $routeFile;
+    }
+}
