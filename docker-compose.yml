@@ -28,11 +28,11 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: teste
+      POSTGRES_DB: teste_hcosta_senior
       POSTGRES_USER: teste
       POSTGRES_PASSWORD: password
     volumes:
-      - ./docker/database:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
 
@@ -55,7 +55,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./docker/mongo:/data/db
+      - mongo_data:/data/db
     networks:
       - app-network
 
@@ -71,3 +71,9 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  mongo_data:
+    driver: local
