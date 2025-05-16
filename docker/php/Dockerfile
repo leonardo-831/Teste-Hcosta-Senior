@@ -44,6 +44,6 @@ USER sammy
 
 EXPOSE 9000
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 CMD ["php-fpm"]

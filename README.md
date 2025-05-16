@@ -1,61 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Gerenciador de Tarefas - Teste Senior Hcosta
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é uma API RESTful desenvolvida em **Laravel 12**, com arquitetura **modular baseada em DDD (Domain-Driven Design)**. Ele implementa autenticação via **JWT**, persistência via **Eloquent**, logs em **MongoDB**, filas com **RabbitMQ**, e um alto nível de separação de responsabilidades para facilitar manutenção e escalabilidade.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ⚡ Iniciar Aplicação
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```Rodar no terminal
+./docker/build-docker.sh
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Após isso, a API estará acessível em:
+```
+http://localhost:8080/api
+```
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🌐 Funcionalidades
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Registro, login e logout com JWT
+- CRUD de projetos (somente dono pode editar/deletar)
+- CRUD de tarefas (somente responsável pode editar)
+- Notificação via RabbitMQ ao criar ou atribuir tarefa
+- Log de eventos importantes em MongoDB
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 📂 Explicando Arquitetura
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+app/
+└── Modules/
+    ├── Auth/
+    │   ├── Domain/         → Entidade e contrato de User
+    │   ├── Application/    → AuthService (login, register, logout)
+    │   ├── Infrastructure/ → Model Eloquent e UserRepository
+    │   └── Interfaces/     → AuthController, FormRequests e rotas
+    
+    ├── Project/
+    │   ├── Domain/         → Entidade Project e interface ProjectRepository
+    │   ├── Application/    → ProjectService
+    │   ├── Infrastructure/ → Model Eloquent e repositorio
+    │   └── Interfaces/     → Controller, Request, Routes
 
-### Premium Partners
+    └── Task/
+        └── Mesma estrutura, com Entities, Jobs, Services e Repositories
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🧠 Motivação das Decisões Técnicas
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 📊 Modularização com DDD
+- Cada módulo representa um **contexto de negócio isolado** (Auth, Project, Task)
+- Permite evoluir funcionalidades sem gerar acoplamento entre camadas
+- Facilita escalar o sistema e eventualmente quebrar em micro-serviços
 
-## Code of Conduct
+### 📖 Separation of Concerns (SoC)
+- **Entities**: representam o "cérebro do sistema", com regras puras
+- **Repositories**: definem *como* buscar ou salvar (interfaces)
+- **Application Services**: executam ações como criar projeto ou login
+- **Infrastructure**: Eloquent, RabbitMQ, MongoDB, etc.
+- **Interfaces/Http**: único ponto que fala com o mundo externo (API)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### ✅ Por que usar interfaces?
+- Separar o **domínio** da tecnologia (Eloquent pode mudar por Mongo, Redis, etc.)
+- Permite uso de **mocks em testes** facilmente
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 📄 Documentação
 
-## License
+- 
+- 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## ⚙ Tecnologias utilizadas
+- Laravel 12
+- tymon/jwt-auth (JWT)
+- jenssegers/mongodb (Mongo)
+- vladimir-yuldashev/laravel-queue-rabbitmq
+- Docker
+
+---
+
+## ✅ Testes e Qualidade
+- Testes com PHPUnit
+- Fácil de mockar services e repositórios
+- Ideal para TDD com arquitetura limpa
+
+---
+
+Desenvolvido com foco em arquitetura, manutenção e escalabilidade ✨
