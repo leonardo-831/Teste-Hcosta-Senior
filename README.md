@@ -27,6 +27,12 @@ http://localhost:8080/api
 
 ---
 
+## 🗂️ Diagrama do Banco de Dados
+
+![Diagrama ER](documentation/database-diagram.png)
+
+---
+
 ## 📂 Explicando Arquitetura
 
 ```
