@@ -13,4 +13,17 @@ class Task
         public ?int $assigneeId,
         public int $creatorId
     ) {}
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'project_id' => $this->projectId,
+            'name' => $this->name,
+            'description' => $this->description,
+            'status' => $this->status,
+            'assignee_id' => $this->assigneeId,
+            'creator_id' => $this->creatorId,
+        ];
+    }
 }

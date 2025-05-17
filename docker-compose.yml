@@ -12,6 +12,9 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - .:/var/www/html
+      - ./docker/supervisor:/etc/supervisor/conf.d
+      - ./storage/logs/workers:/var/www/html/storage/logs/workers
+      - ./storage/logs/supervisor:/var/log/supervisor
     ports:
       - "9000:9000"
     depends_on:
@@ -56,6 +59,10 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: teste
+        MONGO_INITDB_ROOT_PASSWORD: password
+        MONGO_INITDB_DATABASE: teste_hcosta_senior
     networks:
       - app-network
 

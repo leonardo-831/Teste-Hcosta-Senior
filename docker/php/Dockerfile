@@ -21,10 +21,12 @@ RUN apt-get update && apt-get install -y \
     libmagickwand-dev \
     libicu-dev \
     gnupg \
-    && docker-php-ext-install pdo pdo_pgsql mbstring zip exif pcntl bcmath opcache intl
+    librabbitmq-dev \
+    pkg-config \
+    && docker-php-ext-install pdo pdo_pgsql mbstring zip exif pcntl bcmath opcache intl sockets
 
-RUN pecl install mongodb \
-    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
+RUN pecl install mongodb amqp \
+    && docker-php-ext-enable mongodb amqp
 
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
@@ -44,6 +46,6 @@ USER sammy
 
 EXPOSE 9000
 
-RUN composer install --optimize-autoloader
+RUN composer install --optimize-autoloader --no-interaction --no-progress
 
-CMD ["php-fpm"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
