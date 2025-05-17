@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             \App\Modules\Shared\Logging\Domain\Contracts\LoggingRepositoryInterface::class,
-            \App\Modules\Shared\Logging\Infrastructure\Mongo\MongoLoggingRepository::class
+            \App\Modules\Shared\Logging\Infrastructure\Repositories\MongoLoggingRepository::class
         );
     }
 

@@ -1,0 +1,15 @@
+2025-05-17 07:43:56,313 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2025-05-17 07:43:56,313 INFO Included extra file "/etc/supervisor/conf.d/worker-email.conf" during parsing
+2025-05-17 07:43:56,313 INFO Included extra file "/etc/supervisor/conf.d/worker-logs.conf" during parsing
+2025-05-17 07:43:56,314 INFO supervisord started with pid 1
+2025-05-17 07:43:57,315 INFO spawnerr: unknown error making dispatchers for 'worker-email_00': EACCES
+2025-05-17 07:43:57,316 INFO spawnerr: unknown error making dispatchers for 'worker-logs_00': EACCES
+2025-05-17 07:43:58,317 INFO spawnerr: unknown error making dispatchers for 'worker-email_00': EACCES
+2025-05-17 07:43:58,317 INFO spawnerr: unknown error making dispatchers for 'worker-logs_00': EACCES
+2025-05-17 07:44:00,320 INFO spawnerr: unknown error making dispatchers for 'worker-email_00': EACCES
+2025-05-17 07:44:00,320 INFO spawnerr: unknown error making dispatchers for 'worker-logs_00': EACCES
+2025-05-17 07:44:03,325 INFO spawnerr: unknown error making dispatchers for 'worker-email_00': EACCES
+2025-05-17 07:44:03,325 INFO gave up: worker-email_00 entered FATAL state, too many start retries too quickly
+2025-05-17 07:44:03,325 INFO spawnerr: unknown error making dispatchers for 'worker-logs_00': EACCES
+2025-05-17 07:44:03,325 INFO gave up: worker-logs_00 entered FATAL state, too many start retries too quickly
+2025-05-17 07:59:44,346 WARN received SIGQUIT indicating exit request

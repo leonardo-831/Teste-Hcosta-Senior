@@ -4,7 +4,7 @@ namespace App\Modules\Shared\Logging\Infrastructure\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 
-class LogMongoModel extends Model
+class LogMongo extends Model
 {
     protected $connection = 'mongodb';
     protected $collection = 'action_logs';
