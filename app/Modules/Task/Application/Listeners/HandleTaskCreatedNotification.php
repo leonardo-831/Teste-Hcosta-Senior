@@ -16,8 +16,9 @@ class HandleTaskCreatedNotification implements ShouldQueue
         $assigneeEmail = $event->taskData['assigneeEmail'] ?? null;
 
         NotificationDispatcher::sendTaskCreatedEmail($creatorEmail, $event->taskData);
+
         if (!empty($assigneeEmail) && $assigneeEmail !== $creatorEmail) {
-            NotificationDispatcher::sendTaskAssignedEmail($assigneeEmail, $event->taskData);
+            NotificationDispatcher::sendTaskAssignedEmail($event->taskData);
         }
     }
 }

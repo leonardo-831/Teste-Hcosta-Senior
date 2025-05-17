@@ -20,8 +20,9 @@ class NotificationDispatcher
         }
     }
 
-    public static function sendTaskAssignedEmail(string $email, array $taskData): void
+    public static function sendTaskAssignedEmail(array $taskData): void
     {
+        $email = $taskData['assigneeEmail'] ?? null;
         if ($email) {
             Mail::to($email)->send(new TaskAssignedMailable($taskData));
         }
