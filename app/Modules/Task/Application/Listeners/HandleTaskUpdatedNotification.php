@@ -12,6 +12,7 @@ class HandleTaskUpdatedNotification implements ShouldQueue
 
     public function handle(TaskUpdated $event): void
     {
+        info('oi');
         $newAssigneeId = $event->taskData['assigneeId'] ?? null;
         $oldAssigneeId = $event->oldAssigneeId;
 

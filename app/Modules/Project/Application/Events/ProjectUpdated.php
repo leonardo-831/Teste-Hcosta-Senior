@@ -9,5 +9,5 @@ class ProjectUpdated
 {
     use Dispatchable, SerializesModels;
 
-    public function __construct(public array $projectData) {}
+    public function __construct(public array $projectData, public readonly string $userName, public readonly string $ip, public readonly string $route) {}
 }

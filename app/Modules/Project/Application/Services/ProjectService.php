@@ -3,6 +3,7 @@
 namespace App\Modules\Project\Application\Services;
 
 use App\Modules\Project\Application\Events\ProjectCreated;
+use App\Modules\Project\Application\Events\ProjectUpdated;
 use App\Modules\Project\Domain\Entities\Project;
 use App\Modules\Project\Domain\Repositories\ProjectRepositoryInterface;
 use App\Modules\Shared\Authorization\PermissionService;
@@ -29,7 +30,19 @@ class ProjectService
             ownerId: $userId,
             description: $data['description']
         );
-        return $this->repo->save($project);
+
+        $savedProject = $this->repo->save($project);
+
+        $savedProject = $this->repo->save($project);
+
+        Event::dispatch(new ProjectCreated(
+            projectData: $savedProject->toArray(),
+            userName: auth()->user()->name,
+            ip: request()->ip(),
+            route: request()->path()
+        ));
+
+        return $savedProject;
     }
 
     public function show(int $id): ?Project
@@ -54,7 +67,12 @@ class ProjectService
 
         $savedProject = $this->repo->save($project);
 
-        Event::dispatch(new ProjectCreated($savedProject->toArray()));
+        Event::dispatch(new ProjectUpdated(
+            projectData: $savedProject->toArray(),
+            userName: auth()->user()->name,
+            ip: request()->ip(),
+            route: request()->path(),
+        ));
 
         return $savedProject;
     }

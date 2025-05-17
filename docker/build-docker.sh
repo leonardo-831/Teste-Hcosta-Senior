@@ -26,3 +26,5 @@ fi
 if grep -q '^JWT_SECRET=' .env && ! grep -q '^JWT_SECRET=base64:' .env; then
   docker compose exec app php artisan jwt:secret
 fi
+
+docker compose exec app php artisan migrate --seed --force
