@@ -25,6 +25,8 @@ http://localhost:8080/api
 - Notificação via RabbitMQ ao criar ou atribuir tarefa
 - Log de eventos importantes em MongoDB
 
+Link para documentação das APIs: https://documenter.getpostman.com/view/20929682/2sB2qWJ59T
+
 ---
 
 ## 🗂️ Diagrama do Banco de Dados
@@ -73,13 +75,6 @@ app/
 ### ✅ Por que usar interfaces?
 - Separar o **domínio** da tecnologia (Eloquent pode mudar por Mongo, Redis, etc.)
 - Permite uso de **mocks em testes** facilmente
-
----
-
-## 📄 Documentação
-
-- 
-- 
 
 ---
 
