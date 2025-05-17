@@ -6,7 +6,10 @@ Este projeto é uma API RESTful desenvolvida em **Laravel 12**, com arquitetura 
 
 ## ⚡ Iniciar Aplicação
 
+
+
 ```Rodar no terminal
+git clone https://github.com/leonardo-831/Teste-Hcosta-Senior.git
 ./docker/build-docker.sh
 ```
 
@@ -25,7 +28,11 @@ http://localhost:8080/api
 - Notificação via RabbitMQ ao criar ou atribuir tarefa
 - Log de eventos importantes em MongoDB
 
+## 📌 Postman Collection  
 Link para documentação das APIs: https://documenter.getpostman.com/view/20929682/2sB2qWJ59T
+
+Para testar a API, importe a collection do Postman:  
+[Download da Collection](/documentation/Teste-Hcosta.postman_collection.json) 
 
 ---
 
@@ -61,20 +68,23 @@ app/
 ## 🧠 Motivação das Decisões Técnicas
 
 ### 📊 Modularização com DDD
-- Cada módulo representa um **contexto de negócio isolado** (Auth, Project, Task)
+- Cada módulo representa um **contexto delimitado(isolado) do negócio** (Auth, Project, Task)
 - Permite evoluir funcionalidades sem gerar acoplamento entre camadas
 - Facilita escalar o sistema e eventualmente quebrar em micro-serviços
 
 ### 📖 Separation of Concerns (SoC)
-- **Entities**: representam o "cérebro do sistema", com regras puras
-- **Repositories**: definem *como* buscar ou salvar (interfaces)
-- **Application Services**: executam ações como criar projeto ou login
-- **Infrastructure**: Eloquent, RabbitMQ, MongoDB, etc.
-- **Interfaces/Http**: único ponto que fala com o mundo externo (API)
+- **Entities**: representam o "cérebro do sistema", com regras puras, tudo que tem identidade e não é definido por seus valores
+- **Repositories**: definem *como* buscar ou salvar (interfaces), adotado método de interfaces para desacoplamento das ferramentas, no caso Eloquent, facilitando uma mudança futura de ORM
+- **Application Services**: executam ações como criar projeto ou login, encapsulam regras de negócio e não deve ser acoplado a qualquer tecnicalidade, lib ou recurso, deve conter apenas as regras em código puro, mantendo linguagem ubíqua
+- **Infrastructure**: Eloquent, RabbitMQ, MongoDB, etc. Tudo que persiste no banco, repositories, models, infraestrutura da aplicação
+- **Interfaces/Http**: único ponto que fala com o mundo externo (API), requisições http externas, rotas, validações nas requisições
 
 ### ✅ Por que usar interfaces?
 - Separar o **domínio** da tecnologia (Eloquent pode mudar por Mongo, Redis, etc.)
 - Permite uso de **mocks em testes** facilmente
+
+Para envio de Logs e E-mails, foi adotado o uso de events/listeners, onde são executados diretamente na fila do rabbitmq. Os recursos de envio de e-mail e armazenamento de logs foi implementado no modulo Shared, afim de manter os contextos delimitados de cada modulo, já que são recursos Cross-Cutting Concerns (Preocupações Transversais),
+atravessam múltiplos domínios e não pertencem a um contexto específico.
 
 ---
 
