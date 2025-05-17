@@ -13,17 +13,15 @@ class NotificationDispatcher
         protected NotificationServiceInterface $service
     ) {}
 
-    public static function sendTaskCreatedEmail(array $taskData): void
+    public static function sendTaskCreatedEmail(string $email, array $taskData): void
     {
-        $email = $taskData['creator_email'] ?? null;
-        if ($email) {
+        if($email) {
             Mail::to($email)->send(new TaskCreatedMailable($taskData));
         }
     }
 
-    public static function sendTaskAssignedEmail(array $taskData): void
+    public static function sendTaskAssignedEmail(string $email, array $taskData): void
     {
-        $email = $taskData['assignee_email'] ?? null;
         if ($email) {
             Mail::to($email)->send(new TaskAssignedMailable($taskData));
         }

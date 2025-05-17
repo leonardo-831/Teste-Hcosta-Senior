@@ -15,6 +15,7 @@ class Task
         public ?string $description = null,
         public ?int $assigneeId = null,
         public ?string $assigneeName = null,
+        public ?string $assigneeEmail = null,
         public ?string $projectName = null,
         public ?Carbon $createdAt = null,
         public ?Carbon $updatedAt = null,
@@ -25,10 +26,12 @@ class Task
         return [
             'id' => $this->id,
             'project_id' => $this->projectId,
+            'projectName' => $this->projectName,
             'name' => $this->name,
             'description' => $this->description,
             'status' => $this->status->toArray(),
-            'assignee_id' => $this->assigneeId,
+            'assigneeId' => $this->assigneeId,
+            'assigneeEmail' => $this->assigneeEmail
         ];
     }
 }

@@ -56,6 +56,7 @@ class EloquentTaskRepository implements TaskRepositoryInterface
             ),
             assigneeId: $model->assignee_id,
             assigneeName: $model->assignee?->name,
+            assigneeEmail: $model->assignee?->email,
             projectName: $model->project?->name,
             createdAt: $model->created_at,
             updatedAt: $model->updated_at,

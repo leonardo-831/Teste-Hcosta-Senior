@@ -3,6 +3,8 @@
 namespace App\Modules\Shared\Logging\Application\Services;
 
 use App\Modules\Shared\Logging\Domain\Contracts\LoggingRepositoryInterface;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 
 class LogDispatcher
@@ -17,13 +19,8 @@ class LogDispatcher
         return self::$repository;
     }
 
-    public static function log(string $action, string $model, $modelId, array $payload = []): void
+    public static function log(array $payload = []): void
     {
-        self::getRepository()->log([
-            'action' => $action,
-            'model' => $model,
-            'model_id' => $modelId,
-            'payload' => $payload
-        ]);
+        self::getRepository()->log($payload);
     }
 }

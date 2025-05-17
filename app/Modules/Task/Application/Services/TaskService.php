@@ -8,6 +8,7 @@ use App\Modules\Task\Application\Events\TaskCreated;
 use App\Modules\Task\Domain\ValueObjects\TaskStatus;
 use Illuminate\Support\Facades\Event;
 use App\Modules\Shared\Authorization\PermissionService;
+use App\Modules\Task\Application\Events\TaskUpdated;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class TaskService
@@ -34,12 +35,18 @@ class TaskService
             name: $data['name'],
             description: $data['description'] ?? '',
             status: new TaskStatus($data['status']),
-            assigneeId: $data['assignee_id'] ?? null,
+            assigneeId: $data['assigneeId'] ?? null,
         );
 
         $savedTask = $this->repo->save($task);
 
-        Event::dispatch(new TaskCreated($savedTask->toArray()));
+        Event::dispatch(new TaskCreated(
+            taskData: $savedTask->toArray(),
+            userName: auth()->user()->name,
+            creatorEmail: auth()->user()->email,
+            ip: request()->ip(),
+            route: request()->path()
+        ));
 
         return $savedTask;
     }
@@ -60,14 +67,22 @@ class TaskService
             throw new \Exception("Tarefa não encontrada!");
         }
 
+        $oldAssigneeId = $task->assigneeId;
+
         $task->name = $data['name'];
         $task->description = $data['description'] ?? '';
         $task->status = new TaskStatus($data['status']);
-        $task->assigneeId = $data['assignee_id'] ?? null;
+        $task->assigneeId = $data['assigneeId'] ?? null;
 
         $savedTask = $this->repo->save($task);
 
-        Event::dispatch(new TaskCreated($savedTask->toArray()));
+        Event::dispatch(new TaskUpdated(
+            taskData: $savedTask->toArray(),
+            userName: auth()->user()->name,
+            ip: request()->ip(),
+            route: request()->path(),
+            oldAssigneeId: $oldAssigneeId
+        ));
 
         return $savedTask;
     }

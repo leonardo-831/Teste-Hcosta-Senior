@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Modules\Task\Application\Events\TaskCreated;
 use App\Modules\Task\Application\Events\TaskUpdated;
-use App\Modules\Task\Application\Listeners\HandleTaskCreated;
-use App\Modules\Task\Application\Listeners\HandleTaskUpdated;
+use App\Modules\Task\Application\Listeners\HandleTaskCreatedLog;
+use App\Modules\Task\Application\Listeners\HandleTaskCreatedNotification;
+use App\Modules\Task\Application\Listeners\HandleTaskUpdatedLog;
+use App\Modules\Task\Application\Listeners\HandleTaskUpdatedNotification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,10 +15,12 @@ class AppServiceProvider extends ServiceProvider
 {
     protected $listen = [
         TaskCreated::class => [
-            HandleTaskCreated::class,
+            HandleTaskCreatedLog::class,
+            HandleTaskCreatedNotification::class,
         ],
         TaskUpdated::class => [
-            HandleTaskUpdated::class,
+            HandleTaskUpdatedLog::class,
+            HandleTaskUpdatedNotification::class,
         ],
     ];
 

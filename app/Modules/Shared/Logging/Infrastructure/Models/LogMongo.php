@@ -10,13 +10,10 @@ class LogMongo extends Model
     protected $collection = 'action_logs';
 
     protected $fillable = [
-        'user_id',
+        'usuario',
+        'acao',
         'ip',
-        'route',
-        'method',
-        'action',
-        'model',
-        'model_id',
+        'rota',
         'payload',
     ];
 

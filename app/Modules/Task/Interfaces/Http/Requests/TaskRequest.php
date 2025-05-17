@@ -17,7 +17,7 @@ class TaskRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'required|exists:status,id',
-            'assignee_id' => 'nullable|integer|exists:users,id',
+            'assigneeId' => 'nullable|integer|exists:users,id',
         ];
     }
 }
