@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Modules\Auth\Application\Events\UserLogin;
+use App\Modules\Auth\Application\Events\UserLogout;
+use App\Modules\Auth\Application\Listeners\HandleUserLoginLog;
+use App\Modules\Auth\Application\Listeners\HandleUserLogoutLog;
 use App\Modules\Project\Application\Events\ProjectCreated;
 use App\Modules\Project\Application\Events\ProjectUpdated;
 use App\Modules\Project\Application\Listeners\HandleProjectCreatedLog;
@@ -31,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
         ],
         ProjectUpdated::class => [
             HandleProjectUpdatedLog::class,
+        ],
+        UserLogin::class => [
+            HandleUserLoginLog::class,
+        ],
+        UserLogout::class => [
+            HandleUserLogoutLog::class,
         ],
     ];
 
