@@ -44,6 +44,13 @@ class AppServiceProvider extends ServiceProvider
             \App\Modules\Shared\Logging\Domain\Contracts\LoggingRepositoryInterface::class,
             \App\Modules\Shared\Logging\Infrastructure\Repositories\MongoLoggingRepository::class
         );
+
+        $this->app->bind(\App\Modules\Shared\Authorization\PermissionService::class, function ($app) {
+            return new \App\Modules\Shared\Authorization\PermissionService(
+                $app->make(\App\Modules\Project\Domain\Repositories\ProjectRepositoryInterface::class),
+                $app->make(\App\Modules\Task\Domain\Repositories\TaskRepositoryInterface::class),
+            );
+        });
     }
 
     public function boot(): void

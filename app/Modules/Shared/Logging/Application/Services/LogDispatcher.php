@@ -23,8 +23,7 @@ class LogDispatcher
             'action' => $action,
             'model' => $model,
             'model_id' => $modelId,
-            'payload' => $payload,
-            'timestamp' => now(),
+            'payload' => $payload
         ]);
     }
 }

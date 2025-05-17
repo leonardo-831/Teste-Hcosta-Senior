@@ -4,6 +4,7 @@ namespace App\Modules\Task\Infrastructure\Persistence;
 
 use App\Modules\Task\Domain\Entities\Task as DomainTask;
 use App\Modules\Task\Domain\Repositories\TaskRepositoryInterface;
+use App\Modules\Task\Domain\ValueObjects\TaskStatus;
 use App\Modules\Task\Infrastructure\Models\Task as EloquentTask;
 
 class EloquentTaskRepository implements TaskRepositoryInterface
@@ -28,12 +29,11 @@ class EloquentTaskRepository implements TaskRepositoryInterface
         $model->project_id = $task->projectId;
         $model->name = $task->name;
         $model->description = $task->description;
-        $model->status = $task->status;
+        $model->status_id = $task->status->id();
         $model->assignee_id = $task->assigneeId;
-        $model->creator_id = $task->creatorId;
         $model->save();
 
-        return $this->toDomain($model);
+        return $this->toDomain($model->refresh());
     }
 
     public function delete(int $id): void
@@ -43,14 +43,22 @@ class EloquentTaskRepository implements TaskRepositoryInterface
 
     private function toDomain(EloquentTask $model): DomainTask
     {
+        $status = $model->status;
+
         return new DomainTask(
             id: $model->id,
             projectId: $model->project_id,
             name: $model->name,
             description: $model->description,
-            status: $model->status,
+            status: new TaskStatus(
+                id: $status->id,
+                name: $status->name
+            ),
             assigneeId: $model->assignee_id,
-            creatorId: $model->creator_id
+            assigneeName: $model->assignee?->name,
+            projectName: $model->project?->name,
+            createdAt: $model->created_at,
+            updatedAt: $model->updated_at,
         );
     }
 }

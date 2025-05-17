@@ -5,12 +5,16 @@ namespace App\Modules\Task\Application\Services;
 use App\Modules\Task\Domain\Repositories\TaskRepositoryInterface;
 use App\Modules\Task\Domain\Entities\Task;
 use App\Modules\Task\Application\Events\TaskCreated;
+use App\Modules\Task\Domain\ValueObjects\TaskStatus;
 use Illuminate\Support\Facades\Event;
+use App\Modules\Shared\Authorization\PermissionService;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class TaskService
 {
     public function __construct(
         protected TaskRepositoryInterface $repo,
+        protected PermissionService $permissionService,
     ) {}
 
     public function list(int $projectId): array
@@ -18,16 +22,19 @@ class TaskService
         return $this->repo->findAllByProject($projectId);
     }
 
-    public function create(array $data, int $projectId, int $creatorId): Task
+    public function create(array $data, int $projectId, int $userId): Task
     {
+        if (!$this->permissionService->canEditProject($userId, $projectId)) {
+            throw new AuthorizationException("Você não tem permissão para criar uma task neste projeto.");
+        }
+
         $task = new Task(
             id: 0,
             projectId: $projectId,
             name: $data['name'],
             description: $data['description'] ?? '',
-            status: $data['status'],
+            status: new TaskStatus($data['status']),
             assigneeId: $data['assignee_id'] ?? null,
-            creatorId: $creatorId
         );
 
         $savedTask = $this->repo->save($task);
@@ -42,14 +49,20 @@ class TaskService
         return $this->repo->findById($id);
     }
 
-    public function update(int $id, array $data, int $requesterId): ?Task
+    public function update(int $id, array $data, int $userId): ?Task
     {
+        if (!$this->permissionService->canUpdateTask($userId, $id)) {
+            throw new AuthorizationException('Você não tem permissão para editar essa task!');
+        }
+
         $task = $this->repo->findById($id);
-        if (!$task) return null;
+        if (!$task) {
+            throw new \Exception("Tarefa não encontrada!");
+        }
 
         $task->name = $data['name'];
         $task->description = $data['description'] ?? '';
-        $task->status = $data['status'];
+        $task->status = new TaskStatus($data['status']);
         $task->assigneeId = $data['assignee_id'] ?? null;
 
         $savedTask = $this->repo->save($task);
@@ -59,8 +72,12 @@ class TaskService
         return $savedTask;
     }
 
-    public function delete(int $id): void
+    public function delete(int $id, int $userId): void
     {
+        if (!$this->permissionService->canDeleteTask($userId, $id)) {
+            throw new AuthorizationException('Você não tem permissão para deletar essa task!');
+        }
+
         $this->repo->delete($id);
     }
 }

@@ -17,7 +17,6 @@ class Task extends Model
         'description',
         'status',
         'assignee_id',
-        'creator_id',
     ];
 
     public static function newFactory()
@@ -27,12 +26,11 @@ class Task extends Model
 
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class, 'project_id');
     }
 
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'creator_id');
+    public function status() {
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
     public function assignee()

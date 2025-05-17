@@ -18,7 +18,6 @@ class LogMongo extends Model
         'model',
         'model_id',
         'payload',
-        'timestamp',
     ];
 
     protected $dates = [

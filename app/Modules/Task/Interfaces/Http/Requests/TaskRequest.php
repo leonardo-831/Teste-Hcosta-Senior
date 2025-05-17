@@ -16,7 +16,7 @@ class TaskRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'required|in:a_fazer,em_progresso,concluido',
+            'status' => 'required|exists:status,id',
             'assignee_id' => 'nullable|integer|exists:users,id',
         ];
     }

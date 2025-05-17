@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
                 ->each(function ($project) use ($user) {
                     Task::factory()->count(3)->create([
                         'project_id' => $project->id,
-                        'creator_id' => $user->id,
                         'assignee_id' => $user->id,
                     ]);
                 });

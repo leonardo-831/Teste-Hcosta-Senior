@@ -2,16 +2,22 @@
 
 namespace App\Modules\Task\Domain\Entities;
 
+use App\Modules\Task\Domain\ValueObjects\TaskStatus;
+use Carbon\Carbon;
+
 class Task
 {
     public function __construct(
         public readonly int $id,
         public int $projectId,
         public string $name,
-        public string $description,
-        public string $status,
-        public ?int $assigneeId,
-        public int $creatorId
+        public TaskStatus $status,
+        public ?string $description = null,
+        public ?int $assigneeId = null,
+        public ?string $assigneeName = null,
+        public ?string $projectName = null,
+        public ?Carbon $createdAt = null,
+        public ?Carbon $updatedAt = null,
     ) {}
 
     public function toArray(): array
@@ -21,9 +27,8 @@ class Task
             'project_id' => $this->projectId,
             'name' => $this->name,
             'description' => $this->description,
-            'status' => $this->status,
+            'status' => $this->status->toArray(),
             'assignee_id' => $this->assigneeId,
-            'creator_id' => $this->creatorId,
         ];
     }
 }
