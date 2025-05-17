@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Modules\Project\Application\Events\ProjectCreated;
 use App\Modules\Project\Application\Events\ProjectUpdated;
 use App\Modules\Project\Application\Listeners\HandleProjectCreatedLog;
+use App\Modules\Project\Application\Listeners\HandleProjectUpdatedLog;
 use App\Modules\Task\Application\Events\TaskCreated;
 use App\Modules\Task\Application\Events\TaskUpdated;
 use App\Modules\Task\Application\Listeners\HandleTaskCreatedLog;
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
             HandleProjectCreatedLog::class,
         ],
         ProjectUpdated::class => [
-            HandleProjectCreatedLog::class,
+            HandleProjectUpdatedLog::class,
         ],
     ];
 

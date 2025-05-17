@@ -6,7 +6,7 @@ use App\Modules\Shared\Logging\Application\Services\LogDispatcher;
 use App\Modules\Project\Application\Events\ProjectUpdated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class HandleTaskUpdatedLog implements ShouldQueue
+class HandleProjectUpdatedLog implements ShouldQueue
 {
     public string $queue = 'logs';
 
