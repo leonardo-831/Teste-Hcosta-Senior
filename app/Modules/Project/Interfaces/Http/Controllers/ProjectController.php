@@ -24,7 +24,7 @@ class ProjectController extends Controller
     {
         try {
             $project = $this->service->create($request->validated(), auth()->id());
-            return new ProjectResource($project);
+            return response()->json(new ProjectResource($project), 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 403);
         }

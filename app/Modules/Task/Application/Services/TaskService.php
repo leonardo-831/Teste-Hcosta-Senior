@@ -25,7 +25,7 @@ class TaskService
 
     public function create(array $data, int $projectId, int $userId): Task
     {
-        if (!$this->permissionService->canEditProject($userId, $projectId)) {
+        if (!$this->permissionService->canCreateTask($userId, $projectId)) {
             throw new AuthorizationException("Você não tem permissão para criar uma task neste projeto.");
         }
 
@@ -34,7 +34,7 @@ class TaskService
             projectId: $projectId,
             name: $data['name'],
             description: $data['description'] ?? '',
-            status: new TaskStatus($data['status']),
+            status: new TaskStatus($data['statusId']),
             assigneeId: $data['assigneeId'] ?? null,
         );
 
@@ -71,7 +71,7 @@ class TaskService
 
         $task->name = $data['name'];
         $task->description = $data['description'] ?? '';
-        $task->status = new TaskStatus($data['status']);
+        $task->status = new TaskStatus($data['statusId']);
         $task->assigneeId = $data['assigneeId'] ?? null;
 
         $savedTask = $this->repo->save($task);

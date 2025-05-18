@@ -12,7 +12,6 @@ class HandleTaskCreatedNotification implements ShouldQueue
 
     public function handle(TaskCreated $event): void
     {
-        info('oi');
         $creatorEmail = $event->creatorEmail;
         $assigneeEmail = $event->taskData['assigneeEmail'] ?? null;
 

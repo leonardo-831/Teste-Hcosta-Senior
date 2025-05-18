@@ -31,7 +31,7 @@ class AuthController extends Controller
                 'expires_in' => auth()->factory()->getTTL() * 60
             ]);
         } catch (Exception $e) {
-            response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => $e->getMessage()], 401);
         }
     }
 

@@ -102,6 +102,39 @@ atravessam múltiplos domínios e não pertencem a um contexto específico.
 - Fácil de mockar services e repositórios
 - Ideal para TDD com arquitetura limpa
 
+Os caminhos para os testes agora estão dentro de seus respectivos modulos, para manter a estrutura delimitada e isolada, para isso foi preciso
+alterar os paths no phpunit.xml, por meio dessa configuração
+```
+<testsuites>
+    <testsuite name="Unit">
+        <directory suffix="Test.php">app/Modules/Auth/Tests/Unit</directory>
+        <directory suffix="Test.php">app/Modules/Task/Tests/Unit</directory>
+        <directory suffix="Test.php">app/Modules/Project/Tests/Unit</directory>
+    </testsuite>
+    <testsuite name="Feature">
+        <directory suffix="Test.php">app/Modules/Auth/Tests/Feature</directory>
+        <directory suffix="Test.php">app/Modules/Task/Tests/Feature</directory>
+        <directory suffix="Test.php">app/Modules/Project/Tests/Feature</directory>
+    </testsuite>
+</testsuites>
+```
+Com isso, é possível testar por classes de teste, por método da classe e até o modulo completo, exemplos:
+Entrar dentro do container tasks_app:
+```
+    docker exec -it task_app bash
+```
+
+### Modulo Auth
+```
+    php artisan test app/Modules/Auth     ---> Executa todos os testes do módulo Auth, tanto de feature, quanto de unidade
+```
+```
+    php artisan test --filter=AuthFeatureTest   ---> Executa todos os testes da classe AuthFeatureTest, assim você pode escolher qualquer classe de testar
+```
+```
+    php artisan test --filter=AuthFeatureTest::testUserCanRegisterSuccessfully   ---> Executa apenas o método desejado na classe AuthFeatureTest
+```
+Pode seguir o mesmo padrão para os outros arquivos de teste, cada módulo tem seus diretório Tests, com 2 pastas, uma para Feature Tests e outra para Unit Tests
 ---
 
 Desenvolvido com foco em arquitetura, manutenção e escalabilidade ✨

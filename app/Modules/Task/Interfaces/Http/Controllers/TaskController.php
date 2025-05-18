@@ -23,7 +23,7 @@ class TaskController extends Controller
     {
         try {
             $task = $this->service->create($request->validated(), (int)$projectId, auth()->id());
-            return new TaskResource($task);
+            return response()->json(new TaskResource($task), 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 403);
         }

@@ -27,6 +27,11 @@ class PermissionService
         return $this->canEditProject($userId, $projectId);
     }
 
+    public function canCreateTask(int $userId, int $projectId): bool
+    {
+        return $this->canEditProject($userId, $projectId);
+    }
+
     public function canUpdateTask(int $userId, int $taskId): bool
     {
         $task = $this->taskRepo->findById($taskId);

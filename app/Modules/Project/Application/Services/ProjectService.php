@@ -28,10 +28,8 @@ class ProjectService
             id: 0,
             name: $data['name'],
             ownerId: $userId,
-            description: $data['description']
+            description: $data['description'] ?? ''
         );
-
-        $savedProject = $this->repo->save($project);
 
         $savedProject = $this->repo->save($project);
 

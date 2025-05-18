@@ -4,8 +4,8 @@ namespace App\Modules\Auth\Application\Services;
 
 use App\Modules\Auth\Application\Events\UserLogout;
 use App\Modules\Auth\Application\Events\UserLogin;
+use App\Modules\Auth\Domain\Entities\User;
 use App\Modules\Auth\Domain\Repositories\UserRepositoryInterface;
-use App\Modules\Auth\Infrastructure\Models\User as DomainUser;
 use Exception;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +17,7 @@ class AuthService
         protected UserRepositoryInterface $repo
     ) {}
 
-    public function register(array $data): DomainUser
+    public function register(array $data): User
     {
         $data['password'] = Hash::make($data['password']);
         return $this->repo->create($data);
@@ -26,7 +26,7 @@ class AuthService
     public function login(array $credentials): ?string
     {
         if (!$token = JWTAuth::attempt($credentials)) {
-            throw new Exception("Erro no login");
+            throw new Exception("Não foi possível autenticar, confirme suas credenciais!");
         }
 
         unset($credentials['password']);

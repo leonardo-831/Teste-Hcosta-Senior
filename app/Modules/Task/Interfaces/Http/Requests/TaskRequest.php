@@ -16,8 +16,35 @@ class TaskRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'required|exists:status,id',
+            'statusId' => 'required|exists:status,id',
             'assigneeId' => 'nullable|integer|exists:users,id',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.string' => 'O campo nome deve ser um texto.',
+            'name.max' => 'O nome não pode ter mais que 255 caracteres.',
+
+            'description.string' => 'A descrição deve ser um texto.',
+
+            'statusId.required' => 'O status é obrigatório.',
+            'statusId.exists' => 'O status selecionado é inválido.',
+
+            'assigneeId.integer' => 'O ID do responsável deve ser um número.',
+            'assigneeId.exists' => 'O responsável selecionado é inválido.',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'nome',
+            'description' => 'descrição',
+            'statusId' => 'status',
+            'assigneeId' => 'responsável',
         ];
     }
 }
