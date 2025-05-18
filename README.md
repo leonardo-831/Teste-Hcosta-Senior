@@ -119,6 +119,7 @@ alterar os paths no phpunit.xml, por meio dessa configuração
 </testsuites>
 ```
 Com isso, é possível testar por classes de teste, por método da classe e até o modulo completo, exemplos:
+
 Entrar dentro do container tasks_app:
 ```
 docker exec -it task_app bash
