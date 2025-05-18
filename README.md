@@ -121,20 +121,21 @@ alterar os paths no phpunit.xml, por meio dessa configuração
 Com isso, é possível testar por classes de teste, por método da classe e até o modulo completo, exemplos:
 Entrar dentro do container tasks_app:
 ```
-    docker exec -it task_app bash
+docker exec -it task_app bash
 ```
 
 ### Modulo Auth
 ```
-    php artisan test app/Modules/Auth     ---> Executa todos os testes do módulo Auth, tanto de feature, quanto de unidade
+php artisan test app/Modules/Auth     ---> Executa todos os testes do módulo Auth, tanto de feature, quanto de unidade
 ```
 ```
-    php artisan test --filter=AuthFeatureTest   ---> Executa todos os testes da classe AuthFeatureTest, assim você pode escolher qualquer classe de testar
+php artisan test --filter=AuthFeatureTest   ---> Executa todos os testes da classe AuthFeatureTest, assim você pode escolher qualquer classe de testar
 ```
 ```
-    php artisan test --filter=AuthFeatureTest::testUserCanRegisterSuccessfully   ---> Executa apenas o método desejado na classe AuthFeatureTest
+php artisan test --filter=AuthFeatureTest::testUserCanRegisterSuccessfully   ---> Executa apenas o método desejado na classe AuthFeatureTest
 ```
 Pode seguir o mesmo padrão para os outros arquivos de teste, cada módulo tem seus diretório Tests, com 2 pastas, uma para Feature Tests e outra para Unit Tests
+
 ---
 
 Desenvolvido com foco em arquitetura, manutenção e escalabilidade ✨
