@@ -12,7 +12,6 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - .:/var/www/html
-      - ./storage/logs:/var/www/html/storage/logs
     ports:
       - "9000:9000"
     depends_on:

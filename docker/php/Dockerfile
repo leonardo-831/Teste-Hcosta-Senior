@@ -47,8 +47,7 @@ COPY docker/supervisor/worker-*.conf /etc/supervisor/conf.d/
 RUN mkdir -p /var/run/supervisor /var/log/supervisor \
     && chown -R sammy:sammy /var/run/supervisor /var/log/supervisor
 
-RUN mkdir -p /var/www/html/storage/logs/workers \
-    && chown -R sammy:sammy /var/www/html \
+RUN chown -R sammy:sammy /var/www/html \
     && chmod -R 755 /var/www/html/storage
 
 USER sammy

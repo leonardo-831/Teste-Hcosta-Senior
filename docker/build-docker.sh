@@ -13,10 +13,15 @@ echo "" >> .env
 echo "UID=$(id -u)" >> .env
 echo "GID=$(id -g)" >> .env
 
+mkdir -p storage/logs/supervisor
+mkdir -p storage/logs/workers
+chmod -R 755 storage/logs/supervisor storage/logs/workers
+chown -R "$USER":"$USER" storage/logs/supervisor storage/logs/workers
+
 docker compose up -d --build
 
 if [ ! -d "vendor" ]; then
-  docker compose exec app composer install --no-dev --optimize-autoloader
+  docker compose exec app composer install --optimize-autoloader --no-interaction --no-progress
 fi
 
 if ! grep -q '^APP_KEY=base64:' .env; then
