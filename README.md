@@ -15,8 +15,20 @@ git clone https://github.com/leonardo-831/Teste-Hcosta-Senior.git
 
 Após isso, a API estará acessível em:
 ```
-http://localhost:8080/api
+http://localhost:8080/api     -----> url da API
+http://localhost:15672        -----> interface do rabbitmq    login: guest|password: guest
 ```
+
+#### Testar envio de e-mail
+
+
+
+Para testar envio de e-mail, está sendo usado mailtrap, mas pode usar qualquer outro serviço SMTP, caso deseje
+
+- Acessar mailtrap e criar um inbox
+- Terá a opção de escolher a linguagem, selecione laravel 9+, ele gera uma .env para ser colocada na aplicação
+- Coloque a .env no projeto e restarte os containers
+![alt text](documentation/mailtrap.png)
 
 ---
 
@@ -60,7 +72,7 @@ app/
     │   └── Interfaces/     → Controller, Request, Routes
 
     └── Task/
-        └── Mesma estrutura, com Entities, Jobs, Services e Repositories
+        └── Mesma estrutura, com Entities, Services e Repositories
 ```
 
 ---
