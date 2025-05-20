@@ -1,4 +1,4 @@
-# Gerenciador de Tarefas - Teste Senior Hcosta
+# Gerenciador de Tarefas - Teste Senior
 
 Este projeto é uma API RESTful desenvolvida em **Laravel 12**, com arquitetura **modular baseada em DDD (Domain-Driven Design)**. Ele implementa autenticação via **JWT**, persistência via **Eloquent**, logs em **MongoDB**, filas com **RabbitMQ**, e um alto nível de separação de responsabilidades para facilitar manutenção e escalabilidade.
 
@@ -9,7 +9,7 @@ Este projeto é uma API RESTful desenvolvida em **Laravel 12**, com arquitetura 
 
 
 ```Rodar no terminal
-git clone https://github.com/leonardo-831/Teste-Hcosta-Senior.git
+[git clone https://github.com/leonardo-831/Teste-Hcosta-Senior.git](https://github.com/leonardo-831/Teste-Senior.git)
 ./docker/build-docker.sh
 ```
 
