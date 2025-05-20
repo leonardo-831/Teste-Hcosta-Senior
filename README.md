@@ -9,7 +9,7 @@ Este projeto é uma API RESTful desenvolvida em **Laravel 12**, com arquitetura 
 
 
 ```Rodar no terminal
-[git clone https://github.com/leonardo-831/Teste-Hcosta-Senior.git](https://github.com/leonardo-831/Teste-Senior.git)
+https://github.com/leonardo-831/Teste-Senior.git
 ./docker/build-docker.sh
 ```
 
